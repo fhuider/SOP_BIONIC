@@ -110,3 +110,17 @@ unzip Windows-king.zip
 mv king.exe king
 ```
 
+## Step 4: Genotype data sample quality control
+This is a step-by-step guide that will guide you through the process of sample quality control (QC) on your genotype data. Besides some early file specification, the process largely consists of copy-pasting the QC code that we provide you with below. The entire process will take ~8 hrs, on average. We ask you to perform the sample QC yourselves because:
+1)	Cohort labs typically already possess a list of problematic samples and known sample swaps that they can filter out themselves.
+2)	Each cohort will likely have access to more genotype data (e.g. parents of participants) than they will actually upload, allowing for additional quality control steps at this stage compared to after data have been uploaded. 
+
+To optimize cleaning efficacy, use the entire genotype dataset for the sample cleaning procedure described below (i.e. do not only use the genotype data of people with phenotype data, but rather use as much genotype data as is available). 
+
+If sample QC has already been performed on the genotype data in the past, we do want to ask you to perform it once more using the steps below, starting with the unedited data as received from the lab. This is to ensure that genotype data from each cohort is cleaned in an identical way. 
+
+Note that if multiple platforms were used in the collection of the data, steps 4.1 - 4.10 should be performed separately for each dataset. 
+
+It is vital that each genotype dataset is based on NCBI build 37 (human genome 19). This is to make sure that SNP names and locations are all based on the same version of the genome. The LiftOver tool can be used to convert your genotype dataset(s) to the correct build, using either Plink (.map or .bed) or Merlin formatted genotypes as input. 
+
+Please note that Step 4.1, 4.2, 4.3 and 4.10 require manual input from the user. Any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. For example, [_phenotypefile.extension_] should be replaced with the full name of your phenotype file. In contrast, Step 4.4 - 4.9 can be copy-pasted to the terminal without requiring user input, either in one go or separately for each step. In the latter case, to avoid copying only part of a command that is split over two lines, make sure to copy-paste the entirety of code underneath a Step rather than line-by-line. Any line preceded by ‘#’ is not run by Linux and can thus be safely copy-pasted along with the actual code.
