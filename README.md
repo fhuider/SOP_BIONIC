@@ -10,7 +10,7 @@ This document contains the background information for the BIONIC (BIObanks Nethe
 5.	Genotype data sample quality control
 6.	Step-by-step data upload
 
-## Project Background
+## 1. Project Background
 Cohorts that take part in the BBMRI-NL consortium have agreed to a collaboration on the genetics of MDD, and have worked together in data collection by a standardized instrument (Bot et al. 2017; Fedko et al. 2020). They now wish to collaborate in the genetic association analyses. Additional cohorts with MDD diagnoses have agreed to join the consortium.
 
 #### _What is the BIONIC project?_
