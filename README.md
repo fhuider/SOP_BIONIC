@@ -124,3 +124,18 @@ Note that if multiple platforms were used in the collection of the data, steps 4
 It is vital that each genotype dataset is based on NCBI build 37 (human genome 19). This is to make sure that SNP names and locations are all based on the same version of the genome. The LiftOver tool can be used to convert your genotype dataset(s) to the correct build, using either Plink (.map or .bed) or Merlin formatted genotypes as input. 
 
 Please note that Step 4.1, 4.2, 4.3 and 4.10 require manual input from the user. Any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. For example, [_phenotypefile.extension_] should be replaced with the full name of your phenotype file. In contrast, Step 4.4 - 4.9 can be copy-pasted to the terminal without requiring user input, either in one go or separately for each step. In the latter case, to avoid copying only part of a command that is split over two lines, make sure to copy-paste the entirety of code underneath a Step rather than line-by-line. Any line preceded by ‘#’ is not run by Linux and can thus be safely copy-pasted along with the actual code.
+
+### Step 4.1 - Preparation of genotype data - requires manual user input
+The format in which genotype data are returned to investigators varies between genome-wide SNP platforms and genotyping centres. We assume that genotypes have been called by the genotyping centre and returned in the standard .ped and .map file formats. If this is not the case, either look up the conversion procedure for your specific file format or contact Floris Huider at f.huider@vu.nl. 
+
+For the steps below to work, the genotype data should adhere to several criteria:
+1)	The genotype dataset already contains family structure in the form of family ID’s, Father ID’s and Mother ID’s (see the example of .fam below).
+2)	An individual’s sex is coded male = 1, female = 2, missing = 0.
+3)	Samples with multiple measurements (i.e. duplicate samples) have their ID’s suffixed with “_1”, “_2” and  “_3” for the first, second and third measurement, respectively. For example, if Individual 007 of family 12 has been genotyped two times, the their .fam data should look like this:
+```
+12 007_1 005 006 1 -9
+12 007_2 005 006 1 -9
+```
+Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing. Notice the “_1/\_2” suffix after individual 514354009529.
+
+
