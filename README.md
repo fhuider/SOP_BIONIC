@@ -137,5 +137,133 @@ For the steps below to work, the genotype data should adhere to several criteria
 12 007_2 005 006 1 -9
 ```
 Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing. Notice the “_1/\_2” suffix after individual 514354009529.
+```
+123456 514312356789 514319849832 514365747373 2 -9
+123457 514312349872 514312345678 514312345679 2 -9
+123458 514309380490 514312345680 514312345681 2 -9
+123459 0 0 2 -9
+123460 514312341234_1 514343214321 514354321543 2 -9
+123460 514312341234_2 514343214321 514354321543 2 -9
+```
+First, use Plink to create the .bed, .bim and .fam files, which are much more computationally efficient than .ped and .map: 1) Open a Linux terminal, and run the lines below to 2) move to the working directory where Plink and King are located, 3) copy-paste the Plink command below to your terminal, and 4) alter the input and output names of your files accordingly. 
+-	For your cohort abbreviation, see Table 1.
+-	For your genotype platform, please specify both the brand and version.
+-	Example of appropriate genotype data name: NTR_AFFY6
+Note that if your data is already in Plink format, you only have to rename your data to the correct format.
+
+To move to your working directory and convert the .ped & .map files into .bed, .bim, and .fam, run:
+```
+cd [/local/working/directory/with_PLINK_and_KING/]
+./plink --file [_/location/raw_GWA_data_] --make-bed --out [_cohortabbreviation_]_[_genotypeplatform_]
+# Example: ./plink --file /home/user/janjansen/genodata/affymetrix_6 --make-bed --out NTR_AFFY6
+```
+
+Cohort | Abbreviation | Cohort | Abbreviation
+------------ | ------------- | ------------- | -------------
+Content from cell 1 | Content from cell 2 | 3 | 4
+Content in the first column | Content in the second column | 3 | 4
+
+
+### Step 4.2 - Input File and Parameter specification - requires manual user input
+
+Specify the location and name of your input Plink files for later:
+```
+RawData=[cohortabbreviation]_[genotypeplatform]
+# Example: RawData=NTR_AFFY6
+```
+
+Specify the location and name of your phenotype file (Step 2):
+```
+PhenoData=[/location/of/your/phenodirectory/phenotype_file.extension]
+# Example: PhenoData=/home/user/janjansen/bionic/pheno/BIONIC_pheno.sav
+```
+
+Simply run these lines as-is. Make sure not to alter the values assigned:
+```
+CP=0.10
+HET=0.10
+```
+Specify the name of the to-be clean file:
+```
+CLEANFILE=$RawData"_CLN"
+```
+### Step 4.3 - Remove or correct known problems from the genotype file - requires manual user input
+In case you have a file that lists the ID’s of samples with known problems, e.g. poor genotyping or sample swaps, those samples should be removed or corrected here. If you don’t have a file or list with known problematic samples, move to Step 4.4.
+
+Rather than trying to manually edit .fam files (which is not advised), use the following command to remove IDs listed in e.g. “problemIDfile.txt” from the main file:
+```
+./plink --bfile $RawData --remove [problemIDfile.txt] --make-bed --out $RawData"_1" --noweb --allow-no-sex
+```
+In the case of sample swaps, change ID codes in the main files for swapped individuals specified in a file called e.g. “swapped_ID.txt” using: 
+```
+./plink --bfile $RawData"_1" --update-ids [swapped_ID.txt] --make-bed --out $RawData --noweb --allow-no-sex
+```
+This changes ID codes for individuals specified in swapped_ID.txt, which should be in the format of # four columns per row: old FID, old IID, new FID, new IID.
+
+### Step 4.4 - Remove Duplicate Markers - can be copy-pasted
+Remove duplicate markers using:
+```
+cp $RawData".bed" _D1.bed
+cp $RawData".fam" _D1.fam
+cat $RawData".bim" | awk '{print $1" "NR" 0 "$4" "$5" "$6}' | awk '{print $1" "$2"_"$1"_"$4" "$3" "$4" "$5" "$6}' > _D1.bim
+
+./plink --bfile _D1 --list-duplicate-vars ids-only suppress-first --out _Duplicate_Marks
+./plink --bfile _D1 --exclude _Duplicate_Marks.dupvar --snps-only just-acgt --indiv-sort natural --make-bed --out _D2 		 
+mv _Duplicate_Marks.dupvar SNP_Duplicate_Marks.dat
+```
+
+### Step 4.5 - Sex-check and Chromosome X - can be copy-pasted
+Check sex and fix bad HH markers on chromosome X: 
+```
+let CXmin=$(awk '{if ($1==23) print $4}' _D2.bim | sort -n | head -1)
+let CXmax=$(awk '{if ($1==23) print $4}' _D2.bim | sort -n | tail -1)
+echo $CXmin $CXmax
+
+if [ $CXmin -lt 2703391 ] ; then
+ let CXmin=2703391
+fi
+if [ $CXmax -gt 154929412 ] ; then
+ let CXmax=154929412
+fi
+
+./plink --bfile _D2 --chr 23 --from-bp $CXmin --to-bp $CXmax --filter-males --check-sex --out _MCheck --noweb --nonfounders
+grep "PROBLEM" _MCheck.sexcheck | awk '{print $1" "$2}' > _Mcheck_sampleproblems.dat
+./plink --bfile _D2 --chr 23 --from-bp $CXmin --to-bp $CXmax --filter-males --remove _Mcheck_sampleproblems.dat --make-bed --out _D2_1 --noweb --nonfounders
+./plink --bfile _D2_1 --set-hh-missing --geno 0.05 --make-bed --out _D2_2 --nonfounders
+cat _D2_1.bim _D2_2.bim | awk '{print $2}' | sort | uniq -c | awk '{if ($1==1) print $2}' > SNP_CX_HET_removed.dat
+./plink --bfile _D2 --exclude SNP_CX_HET_removed.dat --make-bed --out _D2_3 --nonfounders
+
+./plink --bfile _D2_3 --chr 23 --from-bp 3000000 --to-bp 154000000 --check-sex --out _CheckSex --noweb --allow-no-sex --nonfounders
+grep "PROBLEM" _CheckSex.sexcheck | awk '{if ($3>0) {print $1" "$2}}' > SMP_Sex_Problems.dat
+grep "PROBLEM" _CheckSex.sexcheck | awk '{if ($3==0 && $4==0) print $1" "$2" "$4}' >> SMP_Sex_Problems.dat
+./plink --bfile _D2_3 --remove SMP_Sex_Problems.dat --make-bed --out _D3 --noweb --allow-no-sex
+```
+
+Fix gender of missing samples:
+```
+grep "PROBLEM" _CheckSex.sexcheck | awk '{if ($3==0 && $4!=0) print $1" "$2" "$4}' > SMP_Fixed_sex.dat
+./plink --bfile _D3 --update-sex SMP_Fixed_sex.dat --make-bed --out _D4 --noweb --allow-no-sex
+```
+
+### Step 4.6 - Check Heterozygosity - can be copy-pasted
+Check heterozygosity vs. homozygosity ratio using:
+``` 
+./plink --bfile _D4 --het --out _Heterozygosity --noweb --allow-no-sex --nonfounders
+awk '{if ($6>'$HET') {print $1" "$2}}' _Heterozygosity.het | grep -v "FID" > SMP_Heterozygosity_Problems.dat
+awk '{if ($6<-'$HET') {print $1" "$2}}' _Heterozygosity.het | grep -v "FID" >> SMP_Heterozygosity_Problems.dat
+./plink --bfile _D4 --remove SMP_Heterozygosity_Problems.dat --make-bed --out _D5 --noweb --allow-no-sex --set-hh-missing
+``` 
+
+### Step 4.7 - Sample Call Rate - can be copy-pasted
+Check call rate in samples using:
+```
+./plink --bfile _D5 --missing --out _Missing --noweb --allow-no-sex
+cat _Missing.imiss | awk '{if ($6>'$CP') {print $1" "$2}}' | grep -v "FID" > SMP_Callrate_Problems.dat
+./plink --bfile _D5 --remove SMP_Callrate_Problems.dat --make-bed --out _D6 --noweb --allow-no-sex
+```
+
+
+
+
 
 
