@@ -436,12 +436,12 @@ If all individuals in the genotype data have phenotypes, in which case the genot
 
 If there are individuals in the genetic data without phenotype data, we want to remove these from the to-be uploaded dataset, using:
 <pre>
-awk '{print $[<i>column number of ID in phenotype file</1>]}' $PhenoData | sort -u > _PhenoIDs.tmp
+awk '{print $[<i>column number of ID in phenotype file</i>]}' $PhenoData | sort -u > _PhenoIDs.tmp
 # Example: awk ‘{print $1}’ $PhenoData > _PhenoIDs.tmp
 
-awk '{print $1" "$2}' \_D9.fam | sort -u > \_D9ID.tmp
-grep -f \_PhenoIDs.tmp \_D9ID.tmp > \_D9ID2.tmp
-./plink --bfile \_D9 --keep \_D9ID2.tmp --make-bed --out $CLEANFILE --allow-no-sex
+awk '{print $1" "$2}' _D9.fam | sort -u > _D9ID.tmp
+grep -f _PhenoIDs.tmp _D9ID.tmp > _D9ID2.tmp
+./plink --bfile _D9 --keep _D9ID2.tmp --make-bed --out $CLEANFILE --allow-no-sex
 </pre>
 Finally, rename your log files for upload and remove all redundant files using:
 ```
