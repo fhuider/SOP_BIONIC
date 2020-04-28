@@ -463,9 +463,9 @@ put *.log
 put *.dat
 
 # For example: 	put BIONIC_pheno_NTR.sav
-#		            put BIONIC_pheno_NTR_cookbook.txt
-#		            put NTR_AFFY6_CLN.*
-#	         	    put *.log
+#               put BIONIC_pheno_NTR_cookbook.txt
+#               put NTR_AFFY6_CLN.*
+#               put *.log
 #               put *.dat
 
 # If not all files are in the same folder (the folder from which we issued the sftp command), you have to manually       # specify the location of the file.
