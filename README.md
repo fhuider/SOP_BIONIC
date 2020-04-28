@@ -159,7 +159,7 @@ Here is an example of what the .ped / .fam file should look like. The six column
 123460 514312341234_2 514343214321 514354321543 2 -9
 ```
 First, use Plink to create the .bed, .bim and .fam files, which are much more computationally efficient than .ped and .map: 1) Open a Linux terminal, and run the lines below to 2) move to the working directory where Plink and King are located, 3) copy-paste the Plink command below to your terminal, and 4) alter the input and output names of your files accordingly. 
--	For your cohort abbreviation, see Table 1. If your cohort is not listed, you can create an *unused* three-letter abbreviation for your own cohort.
+-	For your cohort abbreviation, see Table 1. If your cohort is not listed, you may choose an *unused* three-letter abbreviation for your cohort yourself.
 -	For your genotype platform, please specify both the brand and version.
 -	Example of appropriate genotype data name: NTR_AFFY6.
 Note that if your data is already in Plink format, you only have to rename your data to the correct format.
