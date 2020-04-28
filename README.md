@@ -10,6 +10,8 @@ This document contains the background information for the BIONIC (BIObanks Nethe
 5.	Genotype data sample quality control
 6.	Step-by-step data upload
 
+<br/>
+
 ## Project Background
 Cohorts that take part in the BBMRI-NL consortium have agreed to a collaboration on the genetics of MDD, and have worked together in data collection by a standardized instrument (Bot et al. 2017; Fedko et al. 2020). They now wish to collaborate in the genetic association analyses. Additional cohorts with MDD diagnoses have agreed to join the consortium.
 
@@ -36,12 +38,16 @@ _Psychol Med. 2020, 27_:1-10. doi: 10.1017/S0033291720000100
 Bot M, Middeldorp CM, de Geus EJ, Lau HM, Sinke M, van Nieuwenhuizen B, Smit JH, Boomsma DI, Penninx BW. Validity of LIDAS (LIfetime Depression Assessment Self-report): a self-report online assessment of lifetime major depressive disorder. 
 _Psychol Med. 2017, 47(2)_:279-289. doi: 10.1017/S0033291716002312
 
+<br/>
+
 # Guidelines for Sample QC and Data Upload
 
-##### Questions
+#### Questions
 If you have any questions regarding the steps below, please don’t hesitate to contact Floris Huider at f.huider@vu.nl, who coordinates the current phase of the BIONIC project. For general questions regarding the overarching project, you can contact Mariska Bot at m.bot@ggzingeest.nl. 
 
 In this SOP we assume you have access to a Linux terminal. Please note that if your team is unfamiliar with the software and steps involved in this SOP, one of our team members would happily visit your facility in person to assist in the process. To schedule a meeting day for this, please contact f.huider@vu.nl. 
+
+<br/>
 
 ## Step 1: Obtaining an account for the upload server
 In order to transfer the data to the UMCG Genomics Coordination Center cluster, data have to be uploaded to the .sftp server named ‘cheri-ami.hpc.rug.nl’. 
@@ -69,6 +75,8 @@ Best regards,
 
 You will receive a separate guest account (named umcg-guest[1-15]) that will be used to upload your data files in Step 5. You will only need this account after you have finished your sample QC. While the GCC help desk processes your account request, you can move on to the next sections.
 
+<br/>
+
 ## Step 2: Phenotype Data
 Phenotype data can be uploaded in any file format (.txt, .dta, csv, .sav), as long as it contains a variable header and ID column. In addition, please include a codebook that describes the variables and the definition of their values (e.g. sex 1 = male, sex 2 = female). 
 
@@ -80,6 +88,8 @@ Finally, in assigning control status for individuals that do not meet lifetime M
 
 ### Before you move on
 In the rest of this SOP we assume that you can operate the PLINK software and have basic knowledge on genotype file formats and the Linux terminal. Again, if you are unfamiliar with these tools, do not hesitate to set up a meeting for assistance in the process (f.huider@vu.nl). Since we are all Dutch cohorts, a virtual or physical visit is of no trouble.
+
+<br/>
 
 ## Step 3: Genotype Data Software Download
 In this SOP we assume you have access to a Linux terminal, either locally or on a remote cluster you work on, to run the sample QC and data upload commands. If neither are present, a Linux terminal can easily be installed on a Windows operating system:
@@ -109,6 +119,7 @@ wget http://people.virginia.edu/~wc9c/KING/Windows-king.zip
 unzip Windows-king.zip
 mv king.exe king
 ```
+<br/>
 
 ## Step 4: Genotype data sample quality control
 This is a step-by-step guide that will guide you through the process of sample quality control (QC) on your genotype data. Besides some early file specification, the process largely consists of copy-pasting the QC code that we provide you with below. The entire process will take ~8 hrs, on average. We ask you to perform the sample QC yourselves because:
@@ -124,6 +135,8 @@ Note that if multiple platforms were used in the collection of the data, steps 4
 It is vital that each genotype dataset is based on NCBI build 37 (human genome 19). This is to make sure that SNP names and locations are all based on the same version of the genome. The LiftOver tool can be used to convert your genotype dataset(s) to the correct build, using either Plink (.map or .bed) or Merlin formatted genotypes as input. 
 
 Please note that Step 4.1, 4.2, 4.3 and 4.10 require manual input from the user. Any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. For example, [_phenotypefile.extension_] should be replaced with the full name of your phenotype file. In contrast, Step 4.4 - 4.9 can be copy-pasted to the terminal without requiring user input. Make sure to copy-paste the entirety of code within a box rather than line-by-line, as to avoid copying only part of a command. Any line preceded by ‘#’ is not run by Linux and can thus be safely copy-pasted along with the actual code.
+
+<br/>
 
 ### Step 4.1 - Preparation of genotype data - requires manual user input
 The format in which genotype data are returned to investigators varies between genome-wide SNP platforms and genotyping centres. We assume that genotypes have been called by the genotyping centre and returned in the standard .ped and .map file formats. If this is not the case, either look up the conversion procedure for your specific file format or contact Floris Huider at f.huider@vu.nl. 
