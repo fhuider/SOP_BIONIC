@@ -100,7 +100,7 @@ In this SOP we assume you have access to a Linux terminal, either locally or on 
 - The KING software (v2.2.4)
 
 ### The PLINK toolset (v1.90) 
-Download the Plink .zip file and unzip its contents in the directory that you are going to work in by typing the following in the Linux terminal:
+Download the Plink .zip file and unzip its contents in the directory that you are going to work in by copying the following code to your Linux terminal:
 ```
 #For Linux and/or Linux terminal on Windows:
 wget s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20200219.zip
@@ -108,7 +108,7 @@ unzip plink_linux_x86_64_20200219.zip
 ```
 
 ### The KING software (v2.2.4)
-Download the ***correct*** .zip file for your system and unzip its contents in the directory that you are going to work in by typing the following in the terminal:
+Download the ***correct*** .zip file for your system and unzip its contents in the directory that you are going to work in by copying the following code to your Linux terminal:
 ```
 #For Linux:
 wget http://people.virginia.edu/~wc9c/KING/Linux-king.tar.gz
