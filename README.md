@@ -123,7 +123,7 @@ Note that if multiple platforms were used in the collection of the data, steps 4
 
 It is vital that each genotype dataset is based on NCBI build 37 (human genome 19). This is to make sure that SNP names and locations are all based on the same version of the genome. The LiftOver tool can be used to convert your genotype dataset(s) to the correct build, using either Plink (.map or .bed) or Merlin formatted genotypes as input. 
 
-Please note that Step 4.1, 4.2, 4.3 and 4.10 require manual input from the user. Any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. For example, [_phenotypefile.extension_] should be replaced with the full name of your phenotype file. In contrast, Step 4.4 - 4.9 can be copy-pasted to the terminal without requiring user input, either in one go or separately for each step. In the latter case, to avoid copying only part of a command that is split over two lines, make sure to copy-paste the entirety of code underneath a Step rather than line-by-line. Any line preceded by ‘#’ is not run by Linux and can thus be safely copy-pasted along with the actual code.
+Please note that Step 4.1, 4.2, 4.3 and 4.10 require manual input from the user. Any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. For example, [_phenotypefile.extension_] should be replaced with the full name of your phenotype file. In contrast, Step 4.4 - 4.9 can be copy-pasted to the terminal without requiring user input. Make sure to copy-paste the entirety of code within a box rather than line-by-line, as to avoid copying only part of a command. Any line preceded by ‘#’ is not run by Linux and can thus be safely copy-pasted along with the actual code.
 
 ### Step 4.1 - Preparation of genotype data - requires manual user input
 The format in which genotype data are returned to investigators varies between genome-wide SNP platforms and genotyping centres. We assume that genotypes have been called by the genotyping centre and returned in the standard .ped and .map file formats. If this is not the case, either look up the conversion procedure for your specific file format or contact Floris Huider at f.huider@vu.nl. 
@@ -136,7 +136,7 @@ For the steps below to work, the genotype data should adhere to several criteria
 12 007_1 005 006 1 -9
 12 007_2 005 006 1 -9
 ```
-Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing. Notice the “_1/\_2” suffix after individual 514354009529.
+Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing. Notice the “_1/\_2” suffix after individual 514312341234.
 ```
 123456 514312356789 514319849832 514365747373 2 -9
 123457 514312349872 514312345678 514312345679 2 -9
@@ -154,7 +154,7 @@ Note that if your data is already in Plink format, you only have to rename your 
 To move to your working directory and convert the .ped & .map files into .bed, .bim, and .fam, run:
 ```
 cd [/local/working/directory/with_PLINK_and_KING/]
-./plink --file [_/location/raw_GWA_data_] --make-bed --out [_cohortabbreviation_]_[_genotypeplatform_]
+./plink --file [/location/raw_GWA_data] --make-bed --out [cohortabbreviation]_[genotypeplatform]
 # Example: ./plink --file /home/user/janjansen/genodata/affymetrix_6 --make-bed --out NTR_AFFY6
 ```
 
@@ -171,6 +171,7 @@ NESDA-sibling | NDS | | MOTAR | MOT
 MooDFOOD | MFD | | NESDO | NDO
 LASA | LAS | | | 
 
+<br/>
 
 ### Step 4.2 - Input File and Parameter specification - requires manual user input
 
@@ -195,6 +196,8 @@ Specify the name of the to-be clean file:
 ```
 CLEANFILE=$RawData"_CLN"
 ```
+<br/>
+
 ### Step 4.3 - Remove or correct known problems from the genotype file - requires manual user input
 In case you have a file that lists the ID’s of samples with known problems, e.g. poor genotyping or sample swaps, those samples should be removed or corrected here. If you don’t have a file or list with known problematic samples, move to Step 4.4.
 
@@ -206,7 +209,9 @@ In the case of sample swaps, change ID codes in the main files for swapped indiv
 ```
 ./plink --bfile $RawData"_1" --update-ids [swapped_ID.txt] --make-bed --out $RawData --noweb --allow-no-sex
 ```
-This changes ID codes for individuals specified in swapped_ID.txt, which should be in the format of # four columns per row: old FID, old IID, new FID, new IID.
+This changes ID codes for individuals specified in swapped_ID.txt, which should be in the format of four columns per row: old FID, old IID, new FID, new IID.
+
+<br/>
 
 ### Step 4.4 - Remove Duplicate Markers - can be copy-pasted
 Remove duplicate markers using:
@@ -219,6 +224,7 @@ cat $RawData".bim" | awk '{print $1" "NR" 0 "$4" "$5" "$6}' | awk '{print $1" "$
 ./plink --bfile _D1 --exclude _Duplicate_Marks.dupvar --snps-only just-acgt --indiv-sort natural --make-bed --out _D2 		 
 mv _Duplicate_Marks.dupvar SNP_Duplicate_Marks.dat
 ```
+<br/>
 
 ### Step 4.5 - Sex-check and Chromosome X - can be copy-pasted
 Check sex and fix bad HH markers on chromosome X: 
@@ -252,6 +258,7 @@ Fix gender of missing samples:
 grep "PROBLEM" _CheckSex.sexcheck | awk '{if ($3==0 && $4!=0) print $1" "$2" "$4}' > SMP_Fixed_sex.dat
 ./plink --bfile _D3 --update-sex SMP_Fixed_sex.dat --make-bed --out _D4 --noweb --allow-no-sex
 ```
+<br/>
 
 ### Step 4.6 - Check Heterozygosity - can be copy-pasted
 Check heterozygosity vs. homozygosity ratio using:
@@ -261,6 +268,7 @@ awk '{if ($6>'$HET') {print $1" "$2}}' _Heterozygosity.het | grep -v "FID" > SMP
 awk '{if ($6<-'$HET') {print $1" "$2}}' _Heterozygosity.het | grep -v "FID" >> SMP_Heterozygosity_Problems.dat
 ./plink --bfile _D4 --remove SMP_Heterozygosity_Problems.dat --make-bed --out _D5 --noweb --allow-no-sex --set-hh-missing
 ``` 
+<br/>
 
 ### Step 4.7 - Sample Call Rate - can be copy-pasted
 Check call rate in samples using:
@@ -269,6 +277,7 @@ Check call rate in samples using:
 cat _Missing.imiss | awk '{if ($6>'$CP') {print $1" "$2}}' | grep -v "FID" > SMP_Callrate_Problems.dat
 ./plink --bfile _D5 --remove SMP_Callrate_Problems.dat --make-bed --out _D6 --noweb --allow-no-sex
 ```
+<br/>
 
 ### Step 4.8 - Remove Duplicate Samples - can be copy-pasted
 Identify and remove duplicate samples using:
@@ -290,6 +299,7 @@ grep -f _2DNAs.dat _D7_1.fam | awk '{print $1" "$2}' | sed 's/_/ /g' |  awk 'see
 mv _D7.fam _D7.fam_org
 cat _D7.fam_org | sed 's/_1 / /g' | sed 's/_2 / /g' | sed 's/_3 / /g' | sed 's/_4 / /g' > _D7.fam
 ```
+<br/>
 
 ### Step 4.9 - IBD: Parent-Offspring, Sibling & Half-Sibling Issues - can be copy-pasted
 Identify and remove people with multiple (N>1) IBD problems using:
@@ -400,6 +410,7 @@ grep -f _DTestIBD3.tmp SMP_Real_Duplicates.dat | awk '{print $1" "$1}' > _DtestI
 awk '{print $2" "$2}' _SMP_DupeIBD_Problems.tmp >> _DtestIBD4.tmp
 sort -u _DtestIBD4.tmp > SMP_DupeIBD_Problems.dat
 ```
+<br/>
 
 ### Step 4.10 - Select only genotypes of individuals with phenotype data - requires manual user input
 Note that this step requires the ID’s in the phenotype file and the genotype file to match.
@@ -427,8 +438,9 @@ rm -v _*
 
 echo "All done!"
 ```
+<br/>
 
-## Step 5: Data Upload
+## Step 5: Step-by-step Data Upload
 By now you should have received your guest account from the UMCG GCC help desk. After finishing the sample QC, we ask you to upload the phenotype and genotype data to the server using your guest account (named umcg-guest[1-15]). Here's a list of the files that need to be uploaded, for which we provide the code below:
 - The phenotype file;
 - The codebook for the phenotype file, if not included in the phenotype file itself;
