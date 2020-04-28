@@ -215,11 +215,11 @@ CLEANFILE=$RawData"_CLN"
 ### Step 4.3 - Remove or correct known problems from the genotype file - requires manual user input
 In case you have a file that lists the ID’s of samples with known problems, e.g. poor genotyping or sample swaps, those samples should be removed or corrected here. If you don’t have a file or list with known problematic samples, move to Step 4.4.
 
-Rather than trying to manually edit .fam files (which is not advised), use the following command to remove IDs listed in e.g. “problemIDfile.txt” from the main file:
+Rather than trying to manually edit .fam files (which is not advised), create a file that lists the family ID's and personal ID's of samples that need to be removed, e.g. "problem_IDfile.txt", and use the following command to remove these samples from the main files:
 <pre>
-./plink --bfile $RawData --remove [<i>problemIDfile.txt</i>] --make-bed --out $RawData"_1" --noweb --allow-no-sex
+./plink --bfile $RawData --remove [<i>problem_IDfile.txt</i>] --make-bed --out $RawData"_1" --noweb --allow-no-sex
 </pre>
-In the case of sample swaps, change ID codes in the main files for swapped individuals specified in a file called e.g. “swapped_ID.txt” using: 
+To resolve known sample swaps, create a file that lists the old family ID, old personal ID, new family ID and new personal ID per individual. In the command below we use an example file called "swapped_ID.txt" to update the ID's in our main file: 
 <pre>
 ./plink --bfile $RawData"_1" --update-ids [<i>swapped_ID.txt</i>] --make-bed --out $RawData --noweb --allow-no-sex
 </pre>
