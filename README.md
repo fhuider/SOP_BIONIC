@@ -158,10 +158,10 @@ cd [/local/working/directory/with_PLINK_and_KING/]
 # Example: ./plink --file /home/user/janjansen/genodata/affymetrix_6 --make-bed --out NTR_AFFY6
 ```
 
-Cohort | Abbreviation | Cohort | Abbreviation
------------- | ------------- | ------------- | -------------
-Content from cell 1 | Content from cell 2 | 3 | 4
-Content in the first column | Content in the second column | 3 | 4
+Cohort | Abbreviation | | Cohort | Abbreviation
+------------ | ------------- | ------------- | ------------- | -------------
+Content from cell 1 | Content from cell 2 | | 3 | 4 
+Content in the first column | Content in the second column | | 3 | 4
 
 
 ### Step 4.2 - Input File and Parameter specification - requires manual user input
@@ -261,6 +261,222 @@ Check call rate in samples using:
 cat _Missing.imiss | awk '{if ($6>'$CP') {print $1" "$2}}' | grep -v "FID" > SMP_Callrate_Problems.dat
 ./plink --bfile _D5 --remove SMP_Callrate_Problems.dat --make-bed --out _D6 --noweb --allow-no-sex
 ```
+
+### Step 4.8 - Remove Duplicate Samples - can be copy-pasted
+Identify and remove duplicate samples using:
+```
+./king -b _D6.bed --duplicate --prefix _DuplicateSamples
+
+awk -F_ '{print NF-1" "$0}' _DuplicateSamples.con | awk '{if ($1==4) print $2" "$4}' | sed 's/_/ /g' | awk '{if ($1==$3) print $1"_"$2}' > _Dupes.dat
+awk -F_ '{print NF-1" "$0}' _DuplicateSamples.con | awk '{if ($1==4) print $2" "$4}' | sed 's/_/ /g' | awk '{if ($1==$3) print $3"_"$4}' >> _Dupes.dat
+sort -u _Dupes.dat > SMP_Real_Duplicates.dat
+cat SMP_Real_Duplicates.dat | sed 's/_/ /' | awk 'seen[$1]++' | awk '{print $1"_"$2" "$1"_"$2}' > SMP_Duplicate_Samples_Out.dat
+./plink --bfile _D6 --remove SMP_Duplicate_Samples_Out.dat --make-bed --out _D7_1
+```
+
+Remove problematic samples - same sample but different DNA - using:
+```
+cat _D7_1.fam | sed 's/_1 / /g' | sed 's/_2 / /g' | sed 's/_3 / /g' | sed 's/_4 / /g' | sort | uniq -c | awk '{if ($1==2) print $3}' > _2DNAs.dat
+grep -f _2DNAs.dat _D7_1.fam | awk '{print $1" "$2}' | sed 's/_/ /g' |  awk 'seen[$1]++' | awk '{print $1"_"$2" "$3"_"$4}' > _2DNAs_remove_1.dat
+./plink --bfile _D7_1 --remove _2DNAs_remove_1.dat --make-bed --out _D7
+mv _D7.fam _D7.fam_org
+cat _D7.fam_org | sed 's/_1 / /g' | sed 's/_2 / /g' | sed 's/_3 / /g' | sed 's/_4 / /g' > _D7.fam
+```
+
+### Step 4.9 - IBD: Parent-Offspring, Sibling & Half-Sibling Issues - can be copy-pasted
+Identify and remove people with multiple (N>1) IBD problems using:
+```
+./plink --bfile _D7 --chr 1-22 --maf 0.01 --hwe 0.00001 --geno 0.02 --genome rel-check --out _FamIBD1 --allow-no-sex
+
+# Parent-offspring issues
+awk '{if ($5=="PO" && $8<0.80) {print $0}}' _FamIBD1.genome > PO_is_Other1.txt
+
+# Sibling issues (includes FS pairs which are HS).
+awk '{if ($5=="FS" && $7<0.10) {print $0}}' _FamIBD1.genome > FS_is_Other.tmp
+awk '{if ($5=="FS" && $7>0.40) {print $0}}' _FamIBD1.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $8<0.35) {print $0}}' _FamIBD1.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $8>0.65) {print $0}}' _FamIBD1.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $9<0.10) {print $0}}' _FamIBD1.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $9>0.40) {print $0}}' _FamIBD1.genome >> FS_is_Other.tmp
+awk '{if ($9<0.80) {print $0}}' FS_is_Other.tmp | sort -u > FS_is_Other1.txt
+rm FS_is_Other.tmp
+
+# Half-sib issues
+awk '{if ($5=="HS" && $7>=0.10 && $7<=0.40 && $8>=0.35 && $8<=0.65 && $9>=0.10 && $9<=0.40) {print $0}}' _FamIBD1.genome > HS_is_Other.tmp
+awk '{if ($5=="HS" && $7>=0.80 && $8<=0.20 && $9<=0.20) {print $0}}' _FamIBD1.genome >> HS_is_Other.tmp
+awk '{if ($5=="HS" && $8>=0.80) {print $0}}' _FamIBD1.genome >> HS_is_Other.tmp
+awk '{if ($5=="HS" && $9>=0.80) {print $0}}' _FamIBD1.genome >> HS_is_Other.tmp
+sort -u HS_is_Other.tmp > HS_is_Other1.txt
+rm HS_is_Other.tmp
+
+# Issues per sample
+awk '{print $1" "$2}' PO_is_Other1.txt > _IBD1_Probs.tmp
+awk '{print $3" "$4}' PO_is_Other1.txt >> _IBD1_Probs.tmp
+awk '{print $1" "$2}' FS_is_Other1.txt >> _IBD1_Probs.tmp
+awk '{print $3" "$4}' FS_is_Other1.txt >> _IBD1_Probs.tmp
+awk '{print $1" "$2}' HS_is_Other1.txt >> _IBD1_Probs.tmp
+awk '{print $3" "$4}' HS_is_Other1.txt >> _IBD1_Probs.tmp
+
+sort _IBD1_Probs.tmp | uniq -c | awk '{if ($1>1) print $2" "$3}' > _IBD1_Probs.txt
+rm _IBD1_Probs.tmp
+```
+Now see how much is fixed by removing the HIGH count problametics: 
+```
+./plink --bfile _D7 --remove _IBD1_Probs.txt --chr 1-22 --maf 0.01 --hwe 0.00001 --geno 0.02 --genome rel-check --out _FamIBD2 --allow-no-sex
+```
+
+Identify and remove people with one (N=1) IBD problem using:
+```
+# Parent-offspring issues
+awk '{if ($5=="PO" && $8<0.80) {print $0}}' _FamIBD2.genome > PO_is_Other2.txt
+
+# Sibling issues (includes FS pairs which are HS).
+awk '{if ($5=="FS" && $7<0.10) {print $0}}' _FamIBD2.genome > FS_is_Other.tmp
+awk '{if ($5=="FS" && $7>0.40) {print $0}}' _FamIBD2.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $8<0.35) {print $0}}' _FamIBD2.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $8>0.65) {print $0}}' _FamIBD2.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $9<0.10) {print $0}}' _FamIBD2.genome >> FS_is_Other.tmp
+awk '{if ($5=="FS" && $9>0.40) {print $0}}' _FamIBD2.genome >> FS_is_Other.tmp
+awk '{if ($9<0.80) {print $0}}' FS_is_Other.tmp | sort -u > FS_is_Other2.txt
+rm FS_is_Other.tmp
+
+# Half-sib issues
+awk '{if ($5=="HS" && $7>=0.10 && $7<=0.40 && $8>=0.35 && $8<=0.65 && $9>=0.10 && $9<=0.40) {print $0}}' _FamIBD2.genome > HS_is_Other.tmp
+awk '{if ($5=="HS" && $7>=0.80 && $8<=0.20 && $9<=0.20) {print $0}}' _FamIBD2.genome >> HS_is_Other.tmp
+awk '{if ($5=="HS" && $8>=0.80) {print $0}}' _FamIBD2.genome >> HS_is_Other.tmp
+awk '{if ($5=="HS" && $9>=0.80) {print $0}}' _FamIBD2.genome >> HS_is_Other.tmp
+sort -u HS_is_Other.tmp > HS_is_Other2.txt
+rm HS_is_Other.tmp
+
+# Issues per sample
+awk '{print $1" "$2}' PO_is_Other2.txt > _IBD2_Probs.tmp
+awk '{print $3" "$4}' PO_is_Other2.txt >> _IBD2_Probs.tmp
+awk '{print $1" "$2}' FS_is_Other2.txt >> _IBD2_Probs.tmp
+awk '{print $3" "$4}' FS_is_Other2.txt >> _IBD2_Probs.tmp
+awk '{print $1" "$2}' HS_is_Other2.txt >> _IBD2_Probs.tmp
+awk '{print $3" "$4}' HS_is_Other2.txt >> _IBD2_Probs.tmp
+
+sort -u _IBD2_Probs.tmp > _IBD2_Probs.txt
+rm _IBD2_Probs.tmp
+rm *_is_*.txt
+```
+And see how much is fixed by running: 
+```
+cat _IBD?_Probs.txt > _RemoveIBD.tmp
+./plink --bfile _D7 --remove _RemoveIBD.tmp --make-bed --out _D8 --allow-no-sex
+```
+
+Summarize all problematic samples and remove IBD issues including duplicates that were already removed using:
+```
+awk '{print $2}' _IBD1_Probs.txt | sort -u > _DTestIBD1.tmp
+grep -f _DTestIBD1.tmp SMP_Real_Duplicates.dat | awk '{print $1" "$1}' > _SMP_CertainIBD_Problems.tmp
+awk '{print $2" "$2}' _IBD1_Probs.txt >> _SMP_CertainIBD_Problems.tmp
+grep -f _2DNAs.dat _D7_1.fam | awk '{print $1" "$2}' | sed 's/_/ /g' |  awk '!seen[$1]++' | awk '{print $1"_"$2" "$3"_"$4}' | grep -f _DTestIBD1.tmp >> _SMP_CertainIBD_Problems.tmp
+sort -u _SMP_CertainIBD_Problems.tmp > SMP_CertainIBD_Problems.dat
+
+awk '{print $2}' _IBD2_Probs.txt | sort -u > _DTestIBD2.tmp
+grep -f _DTestIBD2.tmp SMP_Real_Duplicates.dat | awk '{print $1" "$1}' > _SMP_MaybeIBD_Problems.tmp
+awk '{print $2" "$2}' _IBD2_Probs.txt >> _SMP_MaybeIBD_Problems.tmp
+grep -f _2DNAs.dat _D7_1.fam | awk '{print $1" "$2}' | sed 's/_/ /g' |  awk '!seen[$1]++' | awk '{print $1"_"$2" "$3"_"$4}' | grep -f _DTestIBD2.tmp >> _SMP_MaybeIBD_Problems.tmp
+sort -u _SMP_MaybeIBD_Problems.tmp > SMP_MaybeIBD_Problems.dat
+```
+Rescan data on duplicate samples, but now post IBD and with family structure in place, using:
+```
+./king -b _D8.bed --duplicate --prefix _DuplicateSamples_round2
+awk '{if ($1!=$3) print $1" "$2}' _DuplicateSamples_round2.con | grep -v "FID" >  _SMP_DupeIBD_Problems.tmp
+awk '{if ($1!=$3) print $3" "$4}' _DuplicateSamples_round2.con | grep -v "FID" >>  _SMP_DupeIBD_Problems.tmp
+./plink --bfile _D8 --remove _SMP_DupeIBD_Problems.tmp --make-bed --out _D9 --allow-no-sex
+
+awk '{print $2}' _SMP_DupeIBD_Problems.tmp > _DTestIBD3.tmp
+grep -f _DTestIBD3.tmp SMP_Real_Duplicates.dat | awk '{print $1" "$1}' > _DtestIBD4.tmp
+awk '{print $2" "$2}' _SMP_DupeIBD_Problems.tmp >> _DtestIBD4.tmp
+sort -u _DtestIBD4.tmp > SMP_DupeIBD_Problems.dat
+```
+
+### Step 4.10 - Select only genotypes of individuals with phenotype data - requires manual user input
+Note that this step requires the ID’s in the phenotype file and the genotype file to match.
+
+If all individuals in the genotype data have phenotypes, in which case the genotype data does not require trimming, simply run: 
+```
+./plink --bfile _D9 --make-bed --out $CLEANFILE --allow-no-sex
+```
+
+If there are individuals in the gneetic data without phenotype data, we want to remove those from the to-be uploaded dataset, using:
+```
+awk '{print $[column number of ID in phenotype file]}' $PhenoData | sort -u > _PhenoIDs.tmp
+# Example: awk ‘{print $1}’ $PhenoData > _PhenoIDs.tmp
+awk '{print $1" "$2}' _D9.fam | sort -u > _D9ID.tmp
+grep -f _PhenoIDs.tmp _D9ID.tmp > _D9ID2.tmp
+ ./plink --bfile _D9 --keep _D9ID2.tmp --make-bed --out $CLEANFILE --allow-no-sex
+```
+Finally, rename your log files for upload and remove all redundant files using:
+```
+for f in _D*.log; do
+ mv "$f" "${f/_/}"
+done
+
+rm -v _*
+
+echo "All done!"
+```
+
+### Step 5: Data Upload
+By now you should have received your guest account from the UMCG GCC help desk. After finishing the sample QC, we ask you to upload the phenotype and genotype data to the server using your guest account (named umcg-guest[1-15]). Here's a list of the files that need to be uploaded, for which we provide the code below:
+●	The phenotype file;
+●	The codebook for the phenotype file, if not included in the phenotype file itself;
+●	The sample QC’ed genotype data in .bim, .bed, and .fam format;
+●	All .log & .dat files from Step 4.1 - Step 4.10. 
+
+A step-by-step approach for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing, but is also outlined here in Box 2. Again, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein.
+
+
+Assign the path and location of your private key created in Step 1 to an environmental variable:
+```
+	KEY=[/path/to/private/account/key].ppk
+```
+Set the private key as your password for the sftp protocol
+```
+	set sftp:connect-program "ssh -axi "$KEY""
+```
+Go to the local folder where all or most of your data is stored:
+```
+        cd [/local/folder/with/your/data/]
+```
+Connect to your guest account of the GCC SFTP upload server: 
+```
+        sftp [your_guest_accountname]@cher-ami.hpc.rug.nl
+```
+Upload the phenotype, genotype, .log and .dat files:
+```
+put [phenotype_file.extension]
+put [phenotype_cookbook.extension]
+put *_CLN.*
+put *.log 
+put *.dat
+
+# For example: 	put BIONIC_pheno_NTR.sav
+#		        put BIONIC_pheno_NTR_cookbook.txt
+#		        put NTR_AFFY6_CLN.*
+#	         	put *.log
+#               put *.dat
+
+# If not all files are in the same folder (the folder from which we issued the sftp command), you have to manually       # specify the location of the file.
+# For example:	put /home/user/janjansen/bionic/BIONIC_pheno_NTR.sav
+```
+Exit from the remote server when all necessary files are uploaded:
+```
+       bye
+```
+
+Please send an email to f.huider@vu.nl when the data has finished uploading.
+
+Once uploaded, we will conduct several sanity checks and additional QC steps. You will get feedback on whether the cleaning and upload of the data was successful. By default, your access to the cher-ami upload server will be active for three months, but this period can be extended if needed.
+
+NB: In case of any issues with regard to uploading of the genotype data, please contact the GCC Helpdesk (hpc.helpdesk@umcg.nl) with cc: f.huider@vu.nl.
+
+At this point, you have completed this standard operating procedure. Thank you for your effort and cooperation in the BIONIC project!
+
+
 
 
 
