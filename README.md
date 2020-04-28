@@ -165,11 +165,12 @@ First, use Plink to create the .bed, .bim and .fam files, which are much more co
 Note that if your data is already in Plink format, you only have to rename your data to the correct format.
 
 To move to your working directory and convert the .ped & .map files into .bed, .bim, and .fam, run:
-```
-cd [/local/working/directory/with_PLINK_and_KING/]
-./plink --file [/location/raw_GWA_data] --make-bed --out [cohortabbreviation]_[genotypeplatform]
+
+<pre>
+cd [<i>/local/working/directory/with_PLINK_and_KING/</i>]
+./plink --file [<i>/location/raw_GWA_data</i>] --make-bed --out [<i>cohortabbreviation</i>]_[<i>genotypeplatform</i>]
 # Example: ./plink --file /home/user/janjansen/genodata/affymetrix_6 --make-bed --out NTR_AFFY6
-```
+</pre>
 
 **Table 1**
 Cohort | Abbreviation | | Cohort | Abbreviation
@@ -189,16 +190,16 @@ LASA | LAS | | |
 ### Step 4.2 - Input File and Parameter specification - requires manual user input
 
 Specify the location and name of your input Plink files for later:
-```
-RawData=[cohortabbreviation]_[genotypeplatform]
+<pre>
+RawData=[<i>cohortabbreviation</i>]_[<i>genotypeplatform</i>]
 # Example: RawData=NTR_AFFY6
-```
+</pre>
 
 Specify the location and name of your phenotype file (Step 2):
-```
-PhenoData=[/location/of/your/phenodirectory/phenotype_file.extension]
+<pre>
+PhenoData=[<i>/location/of/your/phenodirectory/phenotype_file.extension</i>]
 # Example: PhenoData=/home/user/janjansen/bionic/pheno/BIONIC_pheno.sav
-```
+</pre>
 
 Simply run these lines as-is. Make sure not to alter the values assigned:
 ```
@@ -215,13 +216,13 @@ CLEANFILE=$RawData"_CLN"
 In case you have a file that lists the ID’s of samples with known problems, e.g. poor genotyping or sample swaps, those samples should be removed or corrected here. If you don’t have a file or list with known problematic samples, move to Step 4.4.
 
 Rather than trying to manually edit .fam files (which is not advised), use the following command to remove IDs listed in e.g. “problemIDfile.txt” from the main file:
-```
-./plink --bfile $RawData --remove [problemIDfile.txt] --make-bed --out $RawData"_1" --noweb --allow-no-sex
-```
+<pre>
+./plink --bfile $RawData --remove [<i>problemIDfile.txt</i>] --make-bed --out $RawData"_1" --noweb --allow-no-sex
+</pre>
 In the case of sample swaps, change ID codes in the main files for swapped individuals specified in a file called e.g. “swapped_ID.txt” using: 
-```
-./plink --bfile $RawData"_1" --update-ids [swapped_ID.txt] --make-bed --out $RawData --noweb --allow-no-sex
-```
+<pre>
+./plink --bfile $RawData"_1" --update-ids [<i>swapped_ID.txt</i>] --make-bed --out $RawData --noweb --allow-no-sex
+</pre>
 This changes ID codes for individuals specified in swapped_ID.txt, which should be in the format of four columns per row: old FID, old IID, new FID, new IID.
 
 <br/>
@@ -433,14 +434,15 @@ If all individuals in the genotype data have phenotypes, in which case the genot
 ./plink --bfile _D9 --make-bed --out $CLEANFILE --allow-no-sex
 ```
 
-If there are individuals in the gneetic data without phenotype data, we want to remove those from the to-be uploaded dataset, using:
-```
-awk '{print $[column number of ID in phenotype file]}' $PhenoData | sort -u > _PhenoIDs.tmp
+If there are individuals in the genetic data without phenotype data, we want to remove these from the to-be uploaded dataset, using:
+<pre>
+awk '{print $[<i>column number of ID in phenotype file</1>]}' $PhenoData | sort -u > _PhenoIDs.tmp
 # Example: awk ‘{print $1}’ $PhenoData > _PhenoIDs.tmp
-awk '{print $1" "$2}' _D9.fam | sort -u > _D9ID.tmp
-grep -f _PhenoIDs.tmp _D9ID.tmp > _D9ID2.tmp
- ./plink --bfile _D9 --keep _D9ID2.tmp --make-bed --out $CLEANFILE --allow-no-sex
-```
+
+awk '{print $1" "$2}' \_D9.fam | sort -u > \_D9ID.tmp
+grep -f \_PhenoIDs.tmp \_D9ID.tmp > \_D9ID2.tmp
+./plink --bfile \_D9 --keep \_D9ID2.tmp --make-bed --out $CLEANFILE --allow-no-sex
+</pre>
 Finally, rename your log files for upload and remove all redundant files using:
 ```
 for f in _D*.log; do
