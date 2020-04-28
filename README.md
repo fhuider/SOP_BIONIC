@@ -92,7 +92,7 @@ In this SOP we assume you have access to a Linux terminal, either locally or on 
 ### The PLINK toolset (v1.90) 
 Download the Plink .zip file and unzip its contents in the directory that you are going to work in by typing the following in the Linux terminal:
 ```
-#For Linux
+#For Linux and/or Linux terminal on Windows:
 wget s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20200219.zip
 unzip plink_linux_x86_64_20200219.zip
 ```
@@ -100,11 +100,11 @@ unzip plink_linux_x86_64_20200219.zip
 ### The KING software (v2.2.4)
 Download the ***correct*** .zip file for your system and unzip its contents in the directory that you are going to work in by typing the following in the terminal:
 ```
-#For Linux
+#For Linux:
 wget http://people.virginia.edu/~wc9c/KING/Linux-king.tar.gz
 tar -xzvf Linux-king.tar.gz
 
-#For Linux terminal on Windows
+#For Linux terminal on Windows:
 wget http://people.virginia.edu/~wc9c/KING/Windows-king.zip
 unzip Windows-king.zip
 mv king.exe king
@@ -158,6 +158,7 @@ cd [/local/working/directory/with_PLINK_and_KING/]
 # Example: ./plink --file /home/user/janjansen/genodata/affymetrix_6 --make-bed --out NTR_AFFY6
 ```
 
+**Table 1**
 Cohort | Abbreviation | | Cohort | Abbreviation
 ------------ | ------------- | ------------- | ------------- | -------------
 NTR | NTR | | NESDA | NDA 
