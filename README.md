@@ -493,7 +493,7 @@ put *.dat
 #               put *.log
 #               put *.dat
 
-# If not all files are in the same folder (the folder from which we issued the sftp command), you have to manually       # specify the location of the file.
+# If not all files are in the same folder (the folder from which we issued the sftp command), you have to manually specify the location of the file.
 # For example:	put /home/user/janjansen/bionic/BIONIC_pheno_NTR.sav
 ```
 Exit from the remote server when all necessary files are uploaded:
