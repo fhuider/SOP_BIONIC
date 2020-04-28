@@ -160,8 +160,15 @@ cd [/local/working/directory/with_PLINK_and_KING/]
 
 Cohort | Abbreviation | | Cohort | Abbreviation
 ------------ | ------------- | ------------- | ------------- | -------------
-Content from cell 1 | Content from cell 2 | | 3 | 4 
-Content in the first column | Content in the second column | | 3 | 4
+NTR | NTR | | NESDA | NDA 
+Lifelines 1 | LL1 | | Lifelines 2 | LL2
+TRAILS | TRS | | TRAILS-CC | TRC
+Nijmegen Biomedische Studie | NBS | | NQ plus | NQP
+Prediabetes (RELAT-2 & DIRECT) | PRD | | Diabetes (Ketenzorg GWAS) | DKG
+ERF | ERF | | Doetinchem Study | DTS
+NESDA-sibling | NDS | | MOTAR | MOT
+MooDFOOD | MFD | | NESDO | NDO
+LASA | LAS | | | 
 
 
 ### Step 4.2 - Input File and Parameter specification - requires manual user input
@@ -420,31 +427,31 @@ rm -v _*
 echo "All done!"
 ```
 
-### Step 5: Data Upload
+## Step 5: Data Upload
 By now you should have received your guest account from the UMCG GCC help desk. After finishing the sample QC, we ask you to upload the phenotype and genotype data to the server using your guest account (named umcg-guest[1-15]). Here's a list of the files that need to be uploaded, for which we provide the code below:
-●	The phenotype file;
-●	The codebook for the phenotype file, if not included in the phenotype file itself;
-●	The sample QC’ed genotype data in .bim, .bed, and .fam format;
-●	All .log & .dat files from Step 4.1 - Step 4.10. 
+- The phenotype file;
+- The codebook for the phenotype file, if not included in the phenotype file itself;
+- The sample QC’ed genotype data in .bim, .bed, and .fam format;
+- All .log & .dat files from Step 4.1 - Step 4.10. 
 
-A step-by-step approach for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing, but is also outlined here in Box 2. Again, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein.
+A step-by-step approach for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing, but is also outlined below. Again, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein.
 
 
 Assign the path and location of your private key created in Step 1 to an environmental variable:
 ```
-	KEY=[/path/to/private/account/key].ppk
+KEY=[/path/to/private/account/key].ppk
 ```
 Set the private key as your password for the sftp protocol
 ```
-	set sftp:connect-program "ssh -axi "$KEY""
+set sftp:connect-program "ssh -axi "$KEY""
 ```
 Go to the local folder where all or most of your data is stored:
 ```
-        cd [/local/folder/with/your/data/]
+cd [/local/folder/with/your/data/]
 ```
 Connect to your guest account of the GCC SFTP upload server: 
 ```
-        sftp [your_guest_accountname]@cher-ami.hpc.rug.nl
+sftp [your_guest_accountname]@cher-ami.hpc.rug.nl
 ```
 Upload the phenotype, genotype, .log and .dat files:
 ```
@@ -455,9 +462,9 @@ put *.log
 put *.dat
 
 # For example: 	put BIONIC_pheno_NTR.sav
-#		        put BIONIC_pheno_NTR_cookbook.txt
-#		        put NTR_AFFY6_CLN.*
-#	         	put *.log
+#		            put BIONIC_pheno_NTR_cookbook.txt
+#		            put NTR_AFFY6_CLN.*
+#	         	    put *.log
 #               put *.dat
 
 # If not all files are in the same folder (the folder from which we issued the sftp command), you have to manually       # specify the location of the file.
@@ -465,7 +472,7 @@ put *.dat
 ```
 Exit from the remote server when all necessary files are uploaded:
 ```
-       bye
+bye
 ```
 
 Please send an email to f.huider@vu.nl when the data has finished uploading.
