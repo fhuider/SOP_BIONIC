@@ -1,6 +1,6 @@
 # BBMRI BIONIC: Background & Standard Operating Procedure 
 <img align="right" width="120" height="150" src="https://user-images.githubusercontent.com/49392075/80571616-35c42680-89fd-11ea-9900-ef9101291873.jpg">
-This document contains the background information for the BIONIC (BIObanks Netherlands Internet Collective) project on the genetics of MDD (Major Depressive Disorder) and the SOP (Standard Operating Procedure) for performing its sample quality control and data upload. 
+This document contains the background information for the BIONIC (BIObanks Netherlands Internet Collective) project on the genetics of MDD (Major Depressive Disorder), and the SOP (Standard Operating Procedure) for performing its sample quality control and data upload. 
 
 ### Content 
 1.	Project background
