@@ -1,6 +1,6 @@
 # BBMRI BIONIC: Background & Standard Operating Procedure 
 <img align="right" width="120" height="150" src="https://user-images.githubusercontent.com/49392075/80571616-35c42680-89fd-11ea-9900-ef9101291873.jpg">
-This document contains the background information for the BIONIC (BIObanks Netherlands Internet Collective) project on the genetics of MDD (Major Depressive Disorder), and the SOP (Standard Operating Procedure) for performing its sample quality control and data upload. 
+<p align="justify">This document contains the background information for the BIONIC (BIObanks Netherlands Internet Collective) project on the genetics of MDD (Major Depressive Disorder), and the SOP (Standard Operating Procedure) for performing its sample quality control and data upload.</p>
 
 ### Content 
 1.	Project background
@@ -41,7 +41,7 @@ Data analyses will be carried out by Floris Huider (VU), Anil Ori (UMCG) & Yuri 
 # Guidelines for Sample QC and Data Upload
 
 #### Questions
-If you have any questions regarding the steps below, please don’t hesitate to contact Floris Huider at f.huider@vu.nl, who coordinates the current phase of the BIONIC project. For general questions regarding the overarching project, you can contact Mariska Bot at m.bot@ggzingeest.nl. 
+<p align="justify">If you have any questions regarding the steps below, please don’t hesitate to contact Floris Huider at f.huider@vu.nl, who coordinates the current phase of the BIONIC project. For general questions regarding the overarching project, you can contact Mariska Bot at m.bot@ggzingeest.nl.</p>
 
 In this SOP we assume you have access to a Linux terminal. Please note that if your team is unfamiliar with the software and steps involved in this SOP, one of our team members would happily visit your facility in person to assist in the process. To schedule a meeting day for this, please contact f.huider@vu.nl. 
 
