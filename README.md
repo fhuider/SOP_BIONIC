@@ -96,8 +96,8 @@ In this SOP we assume you have access to a Linux terminal, either locally or on 
 - https://www.windowscentral.com/install-windows-subsystem-linux-windows-10
 
  You will need two software to perform the sample quality control: 
-- The PLINK toolset (v1.90) 
-- The KING software (v2.2.4)
+- The [PLINK](http://zzz.bwh.harvard.edu/plink/)  toolset (v1.90) 
+- The [KING](http://people.virginia.edu/~wc9c/KING/Download.htm) software (v2.2.4)
 
 ### The PLINK toolset (v1.90) 
 Download the Plink .zip file and unzip its contents in the directory that you are going to work in by copying the following code to your Linux terminal:
@@ -132,7 +132,7 @@ If sample QC has already been performed on the genotype data in the past, we do 
 
 Note that if multiple platforms were used in the collection of the data, steps 4.1 - 4.10 should be performed separately for each dataset. 
 
-It is vital that each genotype dataset is based on NCBI build 37 (human genome 19). This is to make sure that SNP names and locations are all based on the same version of the genome. The LiftOver tool can be used to convert your genotype dataset(s) to the correct build, using either Plink (.map or .bed) or Merlin formatted genotypes as input. 
+It is vital that each genotype dataset is based on NCBI build 37 (human genome 19). This is to make sure that SNP names and locations are all based on the same version of the genome. The [LiftOver](https://genome.sph.umich.edu/wiki/LiftOver#Lift_PLINK_format) tool can be used to convert your genotype dataset(s) to the correct build, using either Plink (.map or .bed) or Merlin formatted genotypes as input. 
 
 Please note that Step 4.1, 4.2, 4.3 and 4.10 require manual input from the user. Any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. For example, [_phenotypefile.extension_] should be replaced with the full name of your phenotype file. In contrast, Step 4.4 - 4.9 can be copy-pasted to the terminal without requiring user input. Make sure to copy-paste the entirety of code within a box rather than line-by-line, as to avoid copying only part of a command. Any line preceded by ‘#’ is not run by Linux and can thus be safely copy-pasted along with the actual code.
 
