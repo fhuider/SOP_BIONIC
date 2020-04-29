@@ -202,12 +202,12 @@ PhenoData=[<i>/location/of/your/phenodirectory/phenotype_file.extension</i>]
 # Example: PhenoData=/home/user/janjansen/bionic/pheno/BIONIC_pheno.sav
 </pre>
 
-Assign QC thresholds to parameters using:
+Simply run the following to assign QC thresholds to parameters:
 ```
 CP=0.10
 HET=0.10
 ```
-Assign the name of the to-be clean file to a parameter using:
+Simply run the following to assign the name of the to-be clean file to a parameter:
 ```
 CLEANFILE=$RawData"_CLN"
 ```
