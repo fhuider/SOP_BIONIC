@@ -10,10 +10,9 @@ This document contains the background information for the BIONIC (BIObanks Nethe
 5.	Genotype data sample quality control
 6.	Step-by-step data upload
 
-<br/>
-
 ## Project Background
 Cohorts that take part in the BBMRI-NL consortium have agreed to a collaboration on the genetics of MDD, and have worked together in data collection by a standardized instrument (Bot et al. 2017; Fedko et al. 2020). They now wish to collaborate in the genetic association analyses. Additional cohorts with MDD diagnoses have agreed to join the consortium.
+<br/>
 
 #### _What is the BIONIC project?_
 In the BIObanks Netherlands Internet Collective (BIONIC) project, Dutch academic institutions and biobanks collaborate in the standardised and harmonised assessment of Major Depressive Disorder, with the aim of uncovering its genetic etiology. In the first phase of the project, our team developed and validated a rapid online DSM 5-based MDD assessment tool (LIDAS) which would serve as BIONIC’s main tool for data collection (Bot et al., 2017). In the second phase, Fedko et al. (2020) presented prevalence data and demonstrated the large alignment between estimates of prevalence and heritability found in BIONIC and those of previous MDD efforts. Now, in the third phase, we plan to identify the specific genetic variants associated with MDD in the Dutch population. To this end, we will perform a genome-wide association meta-analysis on the MDD and genotype data from all participating cohorts. We will analyse MDD diagnoses, symptom-specific traits and carry out network analyses in the phenotype data.
@@ -30,6 +29,8 @@ The analyses involve phenotype and genome-wide genotype data:
 #### _What will happen to the data and who has access?_
 Both phenotype and genotype data will be uploaded to the UMCG GCC HPC cluster ‘Gearshift’ using a SFTP protocol, which will ensure secure file transfer from a cohort’s database to the Gearshift cluster. There, the data will be accessible only to a select number of researchers who will conduct the analyses of the mentioned projects. Hence, the data will remain in the Netherlands, and are securely protected from the outside as well as non-affiliated Gearshift cluster users. The receiving party UCMG has set up a DTA conforming to the contemporary GDPR.
 Data analyses will be carried out by Floris Huider (VU), Anil Ori (UMCG) & Yuri Milaneschi (VUMC). They have provided the information in this document together with Hanna van Loo (UMCG), Brenda Penninx (VUMC), Mariska Bot (VUMC), Jouke Jan Hottenga (VU) and Dorret Boomsma (VU), who will supervise the project.
+
+<br/>
 
 #### References
 Fedko IO, Hottenga JJ, Helmer Q, Mbarek H, Huider F, Amin N, Beulens JW, Bremmer MA, Elders PJ, Galesloot TE, Kiemeney LA, van Loo HM, Picavet HSJ, Rutters F, van der Spek A, van de Wiel AM, van Duijn C, de Geus EJC, Feskens EJM, Hartman CA, Oldehinkel AJ, Smit JH, Verschuren WMM, Penninx BWJH, Boomsma DI, Bot M. Measurement and genetic architecture of lifetime depression in the Netherlands as assessed by LIDAS (Lifetime Depression Assessment Self-report).
