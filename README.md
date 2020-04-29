@@ -149,10 +149,10 @@ For the steps below to work, the genotype data should adhere to several criteria
 12 007_1 005 006 1 -9
 12 007_2 005 006 1 -9
 ```
-Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing. Notice the “_1/\_2” suffix for individual 514312341234.
+Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing (-9). Notice the “_1/\_2” suffix for individual 514312341234.
 ```
 123456 514312356789 514319849832 514365747373 2 -9
-123457 514312349872 514312345678 514312345679 2 -9
+123457 514312349872 514312345678 514312345679 1 -9
 123458 514309380490 514312345680 514312345681 2 -9
 123459 0 0 2 -9
 123460 514312341234_1 514343214321 514354321543 2 -9
