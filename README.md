@@ -149,7 +149,7 @@ For the steps below to work, the genotype data should adhere to several criteria
 12 007_1 005 006 1 -9
 12 007_2 005 006 1 -9
 ```
-Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing. Notice the “_1/\_2” suffix after individual 514312341234.
+Here is an example of what the .ped / .fam file should look like. The six columns represent Family ID, Personal ID, Father ID, Mother ID, Sex, and Phenotype. For sample QC purposes the phenotype can be left missing. Notice the “_1/\_2” suffix for individual 514312341234.
 ```
 123456 514312356789 514319849832 514365747373 2 -9
 123457 514312349872 514312345678 514312345679 2 -9
@@ -466,25 +466,25 @@ A step-by-step approach for uploading data to the UMCG GCC upload server can be 
 
 
 Assign the path and location of your private key created in Step 1 to an environmental variable:
-```
-KEY=[/path/to/private/account/key].ppk
-```
+<pre>
+KEY=[<i>/path/to/private/account/key</i>].ppk
+</pre>
 Set the private key as your password for the sftp protocol
 ```
 set sftp:connect-program "ssh -axi "$KEY""
 ```
 Go to the local folder where all or most of your data is stored:
-```
-cd [/local/folder/with/your/data/]
-```
+<pre>
+cd [<i>/local/folder/with/your/data/</i>]
+</pre>
 Connect to your guest account of the GCC SFTP upload server: 
-```
-sftp [your_guest_accountname]@cher-ami.hpc.rug.nl
-```
+<pre>
+sftp [<i>your_guest_accountname</i>]@cher-ami.hpc.rug.nl
+</pre>
 Upload the phenotype, genotype, .log and .dat files:
-```
-put [phenotype_file.extension]
-put [phenotype_cookbook.extension]
+<pre>
+put [<i>phenotype_file.extension</i>]
+put [<i>phenotype_cookbook.extension</i>]
 put *_CLN.*
 put *.log 
 put *.dat
@@ -497,7 +497,7 @@ put *.dat
 
 # If not all files are in the same folder (the folder from which we issued the sftp command), you have to manually specify the location of the file.
 # For example:	put /home/user/janjansen/bionic/BIONIC_pheno_NTR.sav
-```
+</pre>
 Exit from the remote server when all necessary files are uploaded:
 ```
 bye
