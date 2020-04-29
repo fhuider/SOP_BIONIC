@@ -41,7 +41,7 @@ Data analyses will be carried out by Floris Huider (VU), Anil Ori (UMCG) & Yuri 
 # Guidelines for Sample QC and Data Upload
 
 #### Questions
-<p align="justify">If you have any questions regarding the steps below, please don’t hesitate to contact Floris Huider at f.huider@vu.nl, who coordinates the current phase of the BIONIC project. For general questions regarding the overarching project, you can contact Mariska Bot at m.bot@ggzingeest.nl.</p>
+If you have any questions regarding the steps below, please don’t hesitate to contact Floris Huider at f.huider@vu.nl, who coordinates the current phase of the BIONIC project. For general questions regarding the overarching project, you can contact Mariska Bot at m.bot@ggzingeest.nl.
 
 In this SOP we assume you have access to a Linux terminal. Please note that if your team is unfamiliar with the software and steps involved in this SOP, one of our team members would happily visit your facility in person to assist in the process. To schedule a meeting day for this, please contact f.huider@vu.nl. 
 
