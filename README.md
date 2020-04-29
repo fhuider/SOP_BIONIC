@@ -20,16 +20,17 @@ In the BIObanks Netherlands Internet Collective (BIONIC) project, Dutch academic
 
 #### _Data specifications_
 The analyses involve phenotype and genome-wide genotype data:
-1.	The phenotype data inform on lifetime Major Depressive Disorder; according to the LIDAS questionnaire or a DSM-based structured interview and covariate data:
-    - 	For cohorts that used the LIDAS instrument (e.g. see the supplementary material of: page 16-19).
-    - 	For lifetime MDD not measured by the LIDAS, please refer to the enclosed document “BIONIC Phenotype data non-LIDAS studies.docx” for the list of phenotypes and covariates. . 
+1.	The phenotype data inform on lifetime Major Depressive Disorder; according to the LIDAS questionnaire (Bot et al., 2017) or a DSM-based structured interview + covariate data:
+    - 	For cohorts that used the LIDAS instrument, please include responses to all items included in the LIDAS questionnaire (For a full list of LIDAS items, see the supplementary material of doi.org/10.1017/S0033291720000100, pages 16-19).
+    - 	For lifetime MDD not measured by the LIDAS, please refer to the enclosed document “BIONIC Phenotype data non-LIDAS studies.docx” for the list of requested phenotypic variables and covariates.
 2.	We ask to upload the genotype data only for MDD cases and controls. The genotype data should be largely unedited, or ‘raw’, apart from having underwent sample QC for which the code is provided below. Please note that the QC protocol described below should be performed on raw genotype data, even if a cleaned dataset is already available from previous QC efforts. This is to ensure that genotype data from each cohort is cleaned in an identical way. The log files containing the number of samples that failed each QC step should be uploaded together with the final sample-cleaned genotype data. In summary, we request:
     - 	Sample QC’ed genotype files in PLINK format (.bim, .bed, .fam) of every individual with lifetime MDD data.
     - 	Log files of the sample QC.
+A full list of files to be uploaded can be found [below](#step-5-step-by-step-data-upload), together with a step-by-step upload guide.
 
 #### _What will happen to the data and who has access?_
 Both phenotype and genotype data will be uploaded to the UMCG GCC HPC cluster ‘Gearshift’ using a SFTP protocol, which will ensure secure file transfer from a cohort’s database to the Gearshift cluster. There, the data will be accessible only to a select number of researchers who will conduct the analyses of the mentioned projects. Hence, the data will remain in the Netherlands, and are securely protected from the outside as well as non-affiliated Gearshift cluster users. The receiving party UCMG has set up a DTA conforming to the contemporary GDPR.
-Data analyses will be carried out by Floris Huider (VU), Anil Ori (UMCG), Yuri Milaneschi (VUMC). They have provided the information in this document together with Hanna van Loo (UMCG), Brenda Penninx (VUMC), Mariska Bot (VUMC), Jouke Jan Hottenga (VU) and Dorret Boomsma (VU) who will supervise the project.
+Data analyses will be carried out by Floris Huider (VU), Anil Ori (UMCG) & Yuri Milaneschi (VUMC). They have provided the information in this document together with Hanna van Loo (UMCG), Brenda Penninx (VUMC), Mariska Bot (VUMC), Jouke Jan Hottenga (VU) and Dorret Boomsma (VU), who will supervise the project.
 
 #### References
 Fedko IO, Hottenga JJ, Helmer Q, Mbarek H, Huider F, Amin N, Beulens JW, Bremmer MA, Elders PJ, Galesloot TE, Kiemeney LA, van Loo HM, Picavet HSJ, Rutters F, van der Spek A, van de Wiel AM, van Duijn C, de Geus EJC, Feskens EJM, Hartman CA, Oldehinkel AJ, Smit JH, Verschuren WMM, Penninx BWJH, Boomsma DI, Bot M. Measurement and genetic architecture of lifetime depression in the Netherlands as assessed by LIDAS (Lifetime Depression Assessment Self-report).
