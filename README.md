@@ -17,13 +17,21 @@
 <p align="justify">In the BIObanks Netherlands Internet Collective (BIONIC) project, Dutch academic institutions and biobanks collaborate in the standardised and harmonised assessment of Major Depressive Disorder, with the aim of uncovering its genetic etiology. In the first phase of the project, our team developed and validated a rapid online DSM 5-based MDD assessment tool (LIDAS) which would serve as BIONIC’s main tool for data collection (Bot et al., 2017). In the second phase, Fedko et al. (2020) presented prevalence data and demonstrated the large alignment between estimates of prevalence and heritability found in BIONIC and those of previous MDD efforts. Now, in the third phase, we plan to identify the specific genetic variants associated with MDD in the Dutch population. To this end, we will perform a genome-wide association meta-analysis on the MDD and genotype data from all participating cohorts. We will analyse MDD diagnoses, symptom-specific traits and carry out network analyses in the phenotype data.</p>
 
 #### _Data specifications_
-The analyses involve phenotype and genome-wide genotype data:
-1.	The phenotype data inform on lifetime Major Depressive Disorder; according to the LIDAS questionnaire (Bot et al., 2017) or a DSM-based structured interview + covariate data:
-    - 	For cohorts that used the LIDAS instrument, please include responses to all items included in the LIDAS questionnaire. For a full list of LIDAS items, see the Supplementary Material of [doi.org/10.1017/S0033291720000100](doi.org/10.1017/S0033291720000100), pages 16-19.
-    - 	For lifetime MDD not measured by the LIDAS, please refer to the enclosed document "[BIONIC Phenotype data non-LIDAS studies.docx](BIONIC%20Phenotype%20data%20non-LIDAS%20studies.docx)" for the list of requested phenotypic variables and covariates.
-2.	We ask to upload the genotype data only for MDD cases and controls. The genotype data should be largely unedited, or ‘raw’, apart from having underwent sample QC for which the code is provided below. Please note that the QC protocol described below should be performed on raw genotype data, even if a cleaned dataset is already available from previous QC efforts. This is to ensure that genotype data from each cohort is cleaned in an identical way. The log files containing the number of samples that failed each QC step should be uploaded together with the final sample-cleaned genotype data. In summary, regarding genotype data we request:
-    - 	Sample QC’ed genotype files in PLINK format (.bim, .bed, .fam) of every individual with lifetime MDD data.
-    - 	Log files of the sample QC.</p>
+<p align="justify">The analyses involve phenotype and genome-wide genotype data:
+<ol>
+<li><p align="justify">The phenotype data inform on lifetime Major Depressive Disorder; according to the LIDAS questionnaire (Bot et al., 2017) or a DSM-based structured interview + covariate data:</p>
+<ul>
+<li><p align="justify">For cohorts that used the LIDAS instrument, please include responses to all items included in the LIDAS questionnaire. For a full list of LIDAS items, see the Supplementary Material of <a href="https://doi.org/10.1017/S0033291720000100">doi.org/10.1017/S0033291720000100</a>, pages 16-19.</li></p>
+<li><p align="justify">For lifetime MDD not measured by the LIDAS, please refer to the enclosed document "<a href="BIONIC%20Phenotype%20data%20non-LIDAS%20studies.docx">BIONIC Phenotype data non-LIDAS studies.docx</a>" for the list of requested phenotypic variables and covariates.</li></p>
+</ul>
+</li>
+<li><p align="justify">We ask to upload the genotype data only for MDD cases and controls. The genotype data should be largely unedited, or ‘raw’, apart from having underwent sample QC for which the code is provided below. Please note that the QC protocol described below should be performed on raw genotype data, even if a cleaned dataset is already available from previous QC efforts. This is to ensure that genotype data from each cohort is cleaned in an identical way. The log files containing the number of samples that failed each QC step should be uploaded together with the final sample-cleaned genotype data. In summary, regarding genotype data we request:</p>
+<ul>
+<li><p align="justify">Sample QC’ed genotype files in PLINK format (.bim, .bed, .fam) of every individual with lifetime MDD data.</li></p>
+<li><p align="justify">Log files of the sample QC.</li></p>
+</li>
+</ul>
+</ol>
 
 #### _What will happen to the data and who has access?_
 <p align="justify">Both phenotype and genotype data will be uploaded to the UMCG GCC HPC cluster ‘Gearshift’ using a SFTP protocol, which will ensure secure file transfer from a cohort’s database to the Gearshift cluster. There, the data will be accessible only to a select number of researchers who will conduct the analyses of the mentioned projects. Hence, the data will remain in the Netherlands, and are securely protected from the outside as well as non-affiliated Gearshift cluster users. The receiving party UCMG has set up a DTA conforming to the contemporary GDPR.
@@ -41,9 +49,11 @@ Data analyses will be carried out by Floris Huider (VU), Anil Ori (UMCG) & Yuri 
 # Guidelines for Sample QC and Data Upload
 
 #### Questions
-If you have any questions regarding the steps below, please don’t hesitate to contact Floris Huider at f.huider@vu.nl, who coordinates the current phase of the BIONIC project. For general questions regarding the overarching project, you can contact Mariska Bot at m.bot@ggzingeest.nl.
+If you have any questions regarding the steps below, please don’t hesitate to contact Floris Huider at f.huider@vu.nl, who coordinates the current phase of the BIONIC project. For general questions regarding the overarching project, you can contact Mariska Bot at m.bot@ggzingeest.nl. 
 
 In this SOP we assume you have access to a Linux terminal. Please note that if your team is unfamiliar with the software and steps involved in this SOP, one of our team members would happily visit your facility in person to assist in the process. To schedule a meeting day for this, please contact f.huider@vu.nl. 
+
+The scripts for sample cleaning below were written by Dr. Jouke-Jan Hottenga, senior researcher at the Vrije Universiteit Amsterdam, with minor project-specific revisions by Floris Huider. Instructions for data upload were largely based on the [Genomics Coordination Center wiki](https://wiki.gcc.rug.nl/wiki/Documentation) & the [MOLGENIS eQTL mapping protocol](https://github.com/molgenis/systemsgenetics/wiki/eQTL-mapping-analysis-cookbook-for-RNA-seq-data).
 
 <br/>
 
