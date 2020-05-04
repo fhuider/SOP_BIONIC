@@ -152,7 +152,7 @@ The format in which genotype data are returned to investigators varies between g
 For the steps below to work, the genotype data should adhere to several criteria:
 1)	The genotype dataset already contains family structure in the form of family ID’s, Father ID’s and Mother ID’s (see the example of .fam below).
 2)	An individual’s sex is coded male = 1, female = 2, missing = 0.
-3)	Samples with multiple measurements (i.e. duplicate samples) have their ID’s suffixed with “_1”, “_2” and  “_3” for the first, second and third measurement, respectively. For example, if Individual 007 of family 12 has been genotyped two times, the their .fam data should look like this:
+3)	Samples with multiple measurements (i.e. duplicate samples) have their ID’s suffixed with “_1”, “_2” and  “_3” for the first, second and third measurement, respectively. For example, if Individual 007 of family 12 has been genotyped two times, their .fam data should look like this:
 ```
 12 007_1 005 006 1 -9
 12 007_2 005 006 1 -9
