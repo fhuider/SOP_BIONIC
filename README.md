@@ -469,8 +469,7 @@ By now you should have received your guest account from the UMCG GCC help desk. 
 - The sample QC’ed genotype data in .bim, .bed, and .fam format;
 - All .log & .dat files from Step 4.1 - Step 4.10. 
 
-A step-by-step approach for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing, but is also outlined below. Again, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein.
-
+A step-by-step approach for your prefered Operating System (Windows, Linux, Mac) for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing, but is also outlined below for the Linux terminal. Again, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. Please note that the upload steps you choose to follow should correspond to the Operating System that was used to create your private and public keys in Step 1. Using a private key that was created using e.g. the ***Windows*** technique in Step 1 will not work for the ***Linux terminal*** steps below, and vice versa. 
 
 Assign the path and location of your private key created in Step 1 to an environmental variable:
 <pre>
