@@ -3,12 +3,12 @@
 <p align="justify">This document contains the background information for the BIONIC (BIObanks Netherlands Internet Collective) project on the genetics of MDD (Major Depressive Disorder), and the SOP (Standard Operating Procedure) for performing its sample quality control and data upload.</p>
 
 ### Content 
-1.	Project background
-2.	Obtaining an account for the upload server
-3.	Phenotype data
-4.	Genotype data software download
-5.	Genotype data sample quality control
-6.	Step-by-step data upload
+1.	[Project background](#project-background)
+2.	[Obtaining an account for the upload server](#step-1-obtaining-an-account-for-the-upload-server)
+3.	[Phenotype data](#step-2-phenotype-data)
+4.	[Genotype data software download](#step-3-genotype-data-software-download)
+5.	[Genotype data sample quality control](#step-4-genotype-data-sample-quality-control)
+6.	[Step-by-step data upload](#step-5-step-by-step-data-upload)
 
 ## Project Background
 <p align="justify">Cohorts that take part in the BBMRI-NL consortium have agreed to a collaboration on the genetics of MDD, and have worked together in data collection by a standardized instrument (Bot et al. 2017; Fedko et al. 2020). They now wish to collaborate in the genetic association analyses. Additional cohorts with MDD diagnoses have agreed to join the consortium.</p>
@@ -129,7 +129,7 @@ mv king.exe king
 ```
 <br/>
 
-## Step 4: Genotype data sample quality control
+## Step 4: Genotype Data Sample Quality Control
 This is a step-by-step guide that will guide you through the process of sample quality control (QC) on your genotype data. Besides some early file specification, the process largely consists of copy-pasting the QC code that we provide you with below. The entire process will take ~8 hrs, on average. We ask you to perform the sample QC yourselves because:
 1)	Cohort labs typically already possess a list of problematic samples and known sample swaps that they can filter out themselves.
 2)	Each cohort will likely have access to more genotype data (e.g. parents of participants) than they will actually upload, allowing for additional quality control steps at this stage compared to after data have been uploaded. 
