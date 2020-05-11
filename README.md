@@ -450,13 +450,19 @@ awk '{print $1" "$2}' _D9.fam | sort -u > _D9ID.tmp
 grep -f _PhenoIDs.tmp _D9ID.tmp > _D9ID2.tmp
 ./plink --bfile _D9 --keep _D9ID2.tmp --make-bed --out $CLEANFILE --allow-no-sex
 </pre>
-Finally, rename your log files for upload and remove all redundant files using:
+Rename your log files for upload and remove all redundant files using:
 ```
 for f in _D*.log; do
  mv "$f" "${f/_/}"
 done
 
 rm -v _*
+```
+Finally, create compressed archives of your data for easy data upload in Step 5:
+```
+tar -c *.log -zv -f log_files.tar.gz
+tar -c *.dat -zv -f dat_files.tar.gz
+tar -c *_CLN.* -zv -f cln_geno_files.tar.gz
 
 echo "All done!"
 ```
@@ -469,7 +475,7 @@ By now you should have received your guest account from the UMCG GCC help desk. 
 - The sample QC’ed genotype data in .bim, .bed, and .fam format;
 - All .log & .dat files from Step 4.1 - Step 4.10. 
 
-A step-by-step approach for your prefered Operating System (Windows, Linux, Mac) for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing, but is also outlined below for the Linux terminal. Again, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein. Please note that the upload steps you choose to follow should correspond to the Operating System that was used to create your private and public keys in Step 1. Using a private key that was created using e.g. the ***Windows*** technique in Step 1 will not work for the ***Linux terminal*** steps below, and vice versa. 
+A step-by-step approach for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing. Please note that the Operating System (OS) you use for data upload should correspond to the OS that was used when generating your key in Step 1. For example, if your key was generated using Windows, then you should use the Windows upload steps as outlined in the [wiki](https://wiki.gcc.rug.nl/wiki/DataSharing#SFTP_GUI_win). The same applies to Mac and its respective upload [wiki](https://wiki.gcc.rug.nl/wiki/DataSharing#SFTP_GUI_mac). Below we outline the steps for data upload using the ***Linux command line***. As before, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein.
 
 Assign the path and location of your private key created in Step 1 to an environmental variable:
 <pre>
@@ -491,15 +497,12 @@ Upload the phenotype, genotype, .log and .dat files:
 <pre>
 put [<i>phenotype_file.extension</i>]
 put [<i>phenotype_cookbook.extension</i>]
-put *_CLN.*
-put *.log 
-put *.dat
+put log_files.tar.gz
+put dat_files.tar.gz 
+put cln_geno_files.tar.gz
 
 # For example: 	put BIONIC_pheno_NTR.sav
 #               put BIONIC_pheno_NTR_cookbook.txt
-#               put NTR_AFFY6_CLN.*
-#               put *.log
-#               put *.dat
 
 # If not all files are in the same folder (the folder from which we issued the sftp command), you have to manually specify the location of the file.
 # For example:	put /home/user/janjansen/bionic/BIONIC_pheno_NTR.sav
