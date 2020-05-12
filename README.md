@@ -116,7 +116,7 @@ unzip plink_linux_x86_64_20200219.zip
 ```
 
 ### The KING software (v2.2.4)
-Download the ***correct*** .zip file for your system and unzip its contents in the directory that you are going to work in by copying the following code to your Linux terminal:
+Download the ***correct*** .tar or .zip file for your system and unzip its contents in the directory that you are going to work in by copying the following code to your Linux terminal:
 ```
 #For Linux:
 wget http://people.virginia.edu/~wc9c/KING/Linux-king.tar.gz
