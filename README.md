@@ -60,7 +60,7 @@ The scripts for sample cleaning below were written by Dr. Jouke-Jan Hottenga, se
 ## Step 1: Obtaining an account for the upload server
 In order to transfer the data to the UMCG Genomics Coordination Center cluster, data have to be uploaded to the .sftp server named ‘cheri-ami.hpc.rug.nl’. 
 
-To gain access to this upload server, please follow the following steps:
+To gain access to this upload server, please complete the following steps:
 1.	Generate a private-public key pair as documented here: http://wiki.gcc.rug.nl/wiki/RequestAccount. The private key will serve as your password for connecting to the upload server. 
 2.	Send an email (see template below) to the GCC Helpdesk (hpc.helpdesk@umcg.nl) and Floris Huider (f.huider@vu.nl), asking for a guest account to upload your data. In this email, please specify the name of your cohort and ***attach your public key***. One can copy the email template below so that you only have to fill in your cohort’s details.
 
