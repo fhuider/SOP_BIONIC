@@ -221,10 +221,11 @@ CLEANFILE=$RawData"_CLN"
 <br/>
 
 ### Step 4.3 - Remove or correct known problems from the genotype file - requires manual user input
-In case you have a file that lists the ID’s of samples with known problems, e.g. poor genotyping or sample swaps, those samples should be removed or corrected here. If you don’t have a file or list with known problematic samples, move to Step 4.4.
+In case you have a file that lists the ID’s of samples with known problems, e.g. poor genotyping or sample swaps, those samples should be removed or corrected here. If you don’t have a file or list with known problematic samples, move to Step 4.4, but note that it uses **$RawData\_2** as input.
 
 Rather than trying to manually edit .fam files (which is not advised), create a file that lists the Family ID's and personal ID's of samples that need to be removed, e.g. "problem_ID.txt":
 ```
+# Don't use headers in these files, just separate columns with a space or tab.
 123456 514312356789
 123457 514312349872
 123458 514309380490
@@ -233,27 +234,28 @@ and use the following command to remove these samples from the main files:
 <pre>
 ./plink --bfile $RawData --remove [<i>problem_ID.txt</i>] --make-bed --out $RawData"_1" --allow-no-sex
 </pre>
-To resolve known sample swaps, create a file that lists the old family ID, old personal ID, new family ID and new personal ID per individual, e.g. "swapped_ID.txt", which might look something like this: 
+To resolve known sample swaps, create a file, e.g. "swapped_ID.txt", that lists the old family ID, old personal ID, new family ID and new personal ID per individual. Such a file might look something like this: 
 ```
+# Again, don't use headers.
 123456 514312356789 123457 514312349872
 123457 514312349872 123456 514312356789
-123460 514312341234_second 123460 514312341234_2
+123460 514312341234_dup 123460 514312341234_2
 ```
-In the command below we use an example file called "swapped_ID.txt" to update the ID's in our main file: 
+In the command below we use the file "swapped_ID.txt" to update the ID's in our main files: 
 <pre>
-./plink --bfile $RawData"_1" --update-ids [<i>swapped_ID.txt</i>] --make-bed --out $RawData --allow-no-sex
+./plink --bfile $RawData"_1" --update-ids [<i>swapped_ID.txt</i>] --make-bed --out $RawData"_2" --allow-no-sex
 </pre>
 
-Note that you can also use this the --update-ids technique to rename your ID's to the appropriate format for the steps below, as displayed for the individual on the third line of the example.
+Note that you can also use this technique to rename personal ID's so that they correspond to the appropriate format, as is displayed for the individual on the third line of the example above.
 
 <br/>
 
 ### Step 4.4 - Remove Duplicate Markers - can be copy-pasted
 Remove duplicate markers using:
 ```
-cp $RawData".bed" _D1.bed
-cp $RawData".fam" _D1.fam
-cat $RawData".bim" | awk '{print $1" "NR" 0 "$4" "$5" "$6}' | awk '{print $1" "$2"_"$1"_"$4" "$3" "$4" "$5" "$6}' > _D1.bim
+cp $RawData"_2.bed" _D1.bed
+cp $RawData"_2.fam" _D1.fam
+cat $RawData"_2.bim" | awk '{print $1" "NR" 0 "$4" "$5" "$6}' | awk '{print $1" "$2"_"$1"_"$4" "$3" "$4" "$5" "$6}' > _D1.bim
 
 ./plink --bfile _D1 --list-duplicate-vars ids-only suppress-first --out _Duplicate_Marks
 ./plink --bfile _D1 --exclude _Duplicate_Marks.dupvar --snps-only just-acgt --indiv-sort natural --make-bed --out _D2 		 
