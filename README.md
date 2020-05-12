@@ -81,7 +81,7 @@ Best regards,
 [Institution]
 ```
 
-You will receive a separate guest account (named umcg-guest[1-15]) that will be used to upload your data files in Step 5. You will only need this account after you have finished your sample QC. While the GCC help desk processes your account request, you can move on to the next sections.
+You will receive a separate guest account (named umcg-guest[1-15]) that will be used to upload your data files in Step 5. While the GCC help desk processes your account request, you can proceed with Steps 2, 3, and 4.
 
 <br/>
 
