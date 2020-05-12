@@ -162,7 +162,7 @@ Here is an example of what the .ped / .fam file should look like. The six column
 123456 514312356789 514319849832 514365747373 2 -9
 123457 514312349872 514312345678 514312345679 1 -9
 123458 514309380490 514312345680 514312345681 2 -9
-123459 0 0 2 -9
+123459 514313231322 0 0 2 -9
 123460 514312341234_1 514343214321 514354321543 2 -9
 123460 514312341234_2 514343214321 514354321543 2 -9
 ```
@@ -223,14 +223,28 @@ CLEANFILE=$RawData"_CLN"
 ### Step 4.3 - Remove or correct known problems from the genotype file - requires manual user input
 In case you have a file that lists the ID’s of samples with known problems, e.g. poor genotyping or sample swaps, those samples should be removed or corrected here. If you don’t have a file or list with known problematic samples, move to Step 4.4.
 
-Rather than trying to manually edit .fam files (which is not advised), create a file that lists the Family ID's and personal ID's of samples that need to be removed, e.g. "problem_ID.txt", and use the following command to remove these samples from the main files:
+Rather than trying to manually edit .fam files (which is not advised), create a file that lists the Family ID's and personal ID's of samples that need to be removed, e.g. "problem_ID.txt":
+```
+123456 514312356789
+123457 514312349872
+123458 514309380490
+```
+and use the following command to remove these samples from the main files:
 <pre>
 ./plink --bfile $RawData --remove [<i>problem_ID.txt</i>] --make-bed --out $RawData"_1" --allow-no-sex
 </pre>
-To resolve known sample swaps, create a file that lists the old family ID, old personal ID, new family ID and new personal ID per individual. In the command below we use an example file called "swapped_ID.txt" to update the ID's in our main file: 
+To resolve known sample swaps, create a file that lists the old family ID, old personal ID, new family ID and new personal ID per individual, e.g. "swapped_ID.txt", which might look something like this: 
+```
+123456 514312356789 123457 514312349872
+123457 514312349872 123456 514312356789
+123460 514312341234_second 123460 514312341234_2
+```
+In the command below we use an example file called "swapped_ID.txt" to update the ID's in our main file: 
 <pre>
 ./plink --bfile $RawData"_1" --update-ids [<i>swapped_ID.txt</i>] --make-bed --out $RawData --allow-no-sex
 </pre>
+
+Note that you can also use this the --update-ids technique to rename your ID's to the appropriate format for the steps below, as displayed for the individual on the third line of the example.
 
 <br/>
 
