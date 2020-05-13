@@ -493,7 +493,7 @@ A step-by-step approach for uploading data to the UMCG GCC upload server can be 
 
 **5.1** - Assign the path and location of your private key created in Step 1 to an environmental variable and set it as your password for the sftp protocol using the code below. If your key is in the default location (~/.ssh/) you can skip this step and move on to 5.2:
 <pre>
-KEY=[<i>/path/to/private/account/key</i>].ppk
+KEY=[<i>/path/to/private/key/id_rsa</i>]
 set sftp:connect-program "ssh -axi "$KEY""
 </pre>
 
@@ -504,6 +504,7 @@ cd [<i>/local/folder/with/your/data/</i>]
 **5.3** - Connect to your guest account of the GCC SFTP upload server: 
 <pre>
 sftp [<i>your_guest_accountname</i>]@cher-ami.hpc.rug.nl
+When prompted, enter the password you chose for your private key back in Step 1.
 </pre>
 **5.4** - Upload the phenotype, genotype, .log and .dat files:
 <pre>
