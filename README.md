@@ -147,7 +147,7 @@ Please note that Step 4.1, 4.2, 4.3 and 4.10 require manual input from the user.
 <br/>
 
 ### Step 4.1 - Preparation of genotype data - requires manual user input
-The format in which genotype data are returned to investigators varies between genome-wide SNP platforms and genotyping centres. We assume that genotypes have been called by the genotyping centre and returned in the standard .ped and .map file formats. If this is not the case, either look up the conversion procedure for your specific file format or contact Floris Huider at f.huider@vu.nl. 
+The format in which genotype data are returned to investigators varies among genome-wide SNP platforms and genotyping centres. We assume that genotypes have been called by the genotyping centre and returned in the standard .ped and .map file formats. If this is not the case, either look up the conversion procedure for your specific file format or contact Floris Huider at f.huider@vu.nl. 
 
 For the steps below to work, the genotype data should adhere to several criteria:
 1)	The genotype dataset already contains family structure in the form of family ID’s, Father ID’s and Mother ID’s (see the example of .fam below).
