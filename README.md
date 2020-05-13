@@ -504,7 +504,7 @@ cd [<i>/local/folder/with/your/data/</i>]
 **5.3** - Connect to your guest account of the GCC SFTP upload server: 
 <pre>
 sftp [<i>your_guest_accountname</i>]@cher-ami.hpc.rug.nl
-When prompted, enter the password you chose for your private key back in Step 1.
+# When prompted, enter the password you chose for your private key back in Step 1.
 </pre>
 **5.4** - Upload the phenotype, genotype, .log and .dat files:
 <pre>
