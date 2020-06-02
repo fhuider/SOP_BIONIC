@@ -499,7 +499,6 @@ KEY=[<i>/path/to/private/key</i>]/id_rsa
 eval $(ssh-agent)
 
 ssh-add "$KEY"
-
 # When prompted, enter the password you chose for your private key back in Step 1.
 </pre>
 
