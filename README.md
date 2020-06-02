@@ -448,7 +448,7 @@ sort -u _DtestIBD4.tmp > SMP_DupeIBD_Problems.dat
 <br/>
 
 ### Step 4.10 - Select only genotypes of individuals with phenotype data - requires manual user input
-Note that this step requires the ID’s in the phenotype file and the genotype file to match.
+Note that this step requires the ID’s in the phenotype file and the genotype file to **match**.
 
 If all individuals in the genotype data have phenotypes, in which case the genotype data does not require trimming, simply run: 
 ```
@@ -491,7 +491,7 @@ By now you should have received your guest account from the UMCG GCC help desk. 
 
 A step-by-step approach for uploading data to the UMCG GCC upload server can be found at https://wiki.gcc.rug.nl/wiki/DataSharing. Please note that the Operating System (OS) you use for data upload should correspond to the OS that was used when generating your key in Step 1. For example, if your key was generated using Windows, then you should use the upload steps for Windows, as outlined in the [wiki](https://wiki.gcc.rug.nl/wiki/DataSharing#SFTP_GUI_win). The same applies to Mac and its respective upload [wiki](https://wiki.gcc.rug.nl/wiki/DataSharing#SFTP_GUI_mac). Below we outline the steps for data upload using the ***Linux command line***. As before, any section of a line enclosed in square brackets requires manual user input that is specified by the italicized text therein.
 
-**5.1** - Assign the path and location of your private key created in Step 1 to an environmental variable and add it to your ssh agent for the sftp protocol using the code below. 
+**5.1** - Assign the path and location of your private key - created in Step 1 - to an environmental variable, and add it to your ssh agent for the sftp protocol using the code below. 
 <pre>
 KEY=[<i>/path/to/private/key</i>]/id_rsa
 # Example: KEY=~/.ssh/id_rsa
