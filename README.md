@@ -472,11 +472,18 @@ done
 
 rm -v _*
 ```
-Finally, create compressed archives of your data for easy data upload in Step 5:
+Finally, create compressed archives of your data for easy data upload in Step 5. **Important:** If this is your second, third, or xth time creating the tar archives (i.e. because you are completing steps 4.1 - 4.10 separately for data from each separate genotype platform), do not forget to add a suffix to the tar output files below as to not overwrite the data from earlier runs:
 ```
 tar -c *.log -zv -f log_files.tar.gz
 tar -c *.dat -zv -f dat_files.tar.gz
 tar -c *_CLN.* -zv -f cln_geno_files.tar.gz
+
+# If this is your second, third, or xth run, add a corresponding suffix to the tar output as to not overwrite your earlier archives:
+# tar -c *.log -zv -f log_files.tar_[x].gz
+# tar -c *.dat -zv -f dat_files.tar_[x].gz
+# tar -c *_CLN.* -zv -f cln_geno_files_[x].tar.gz
+
+# Example: tar -c *_CLN.* -zv -f cln_geno_files_2.tar.gz
 
 echo "All done!"
 ```
