@@ -538,9 +538,11 @@ put cln_geno_files.tar.gz
 bye
 ```
 
-Please send an email to f.huider@vu.nl when the data has finished uploading.
+Please send an email to f.huider@vu.nl when the data has finished uploading. 
 
 Once uploaded, we will conduct several sanity checks and additional QC steps. You will get feedback on whether the cleaning and upload of the data was successful. By default, your access to the cher-ami upload server will be active for three months, but this period can be extended if needed.
+
+**Important**: Please make sure to also store your final tar archives locally, as to decrease the odds that the data prep has to ever be restarted from scratch.
 
 NB: In case of any issues with regard to uploading of the genotype data, please contact the GCC Helpdesk (hpc.helpdesk@umcg.nl) with cc: f.huider@vu.nl.
 
